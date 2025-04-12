@@ -1,0 +1,2 @@
+C:/Users/Admin/Downloads/magic-flutter-main/magic-flutter-main/magic_demo/android/app/.cxx/Debug/4y13yr3u/armeabi-v7a/CMakeFiles/edit_cache.dir
+C:/Users/Admin/Downloads/magic-flutter-main/magic-flutter-main/magic_demo/android/app/.cxx/Debug/4y13yr3u/armeabi-v7a/CMakeFiles/rebuild_cache.dir
