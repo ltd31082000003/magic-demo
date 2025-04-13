@@ -20,6 +20,14 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     print('Rendering Magic.instance.relayer');
+    if (Magic.instance == null) {
+      return const MaterialApp(
+        title: 'Magic Demo',
+        home: Scaffold(
+          body: Center(child: Text('Failed to initialize Magic SDK')),
+        ),
+      );
+    }
     return MaterialApp(
       title: 'Magic Demo',
       home: Stack(children: [

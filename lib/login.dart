@@ -11,14 +11,18 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
-  Magic magic = Magic.instance;
-  final emailInput = TextEditingController(text: 'your.email@example.com');
+  Magic? magic = Magic.instance;
+  final emailInput = TextEditingController(text: 'ltd31082003@gmail.com');
   final _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
     super.initState();
-    var future = magic.user.isLoggedIn();
+    if (magic == null) {
+      print('Magic instance is null');
+      return;
+    }
+    var future = magic!.user.isLoggedIn();
     future.then((isLoggedIn) {
       if (isLoggedIn) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -65,9 +69,20 @@ class _LoginPageState extends State<LoginPage> {
                 ),
                 onPressed: () async {
                   if (_formKey.currentState!.validate()) {
+                    if (magic == null) {
+                      showResult(context, 'Magic instance is null');
+                      return;
+                    }
                     print('Attempting to login with email: ${emailInput.text}');
                     try {
-                      var token = await magic.auth.loginWithEmailOTP(email: emailInput.text);
+                      print('Sending OTP request...');
+                      var token = await magic!.auth.loginWithEmailOTP(email: emailInput.text).timeout(
+                        const Duration(seconds: 60),
+                        onTimeout: () {
+                          print('Timeout occurred while waiting for OTP response');
+                          throw Exception('Login request timed out');
+                        },
+                      );
                       print('Login successful, token: $token');
                       showResult(context, 'token, $token');
                       if (token.isNotEmpty) {
